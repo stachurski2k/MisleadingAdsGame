@@ -36,7 +36,7 @@ public class FluidManager : MonoBehaviour
         }
     }
     void CreateStoneBuffer(){
-        if(waterParent==null){
+        if(waterParent==null||lavaParent==null){
             return;
         }
         stoneBuffer=new StoneParticle[lavaParent.childCount+waterParent.childCount];
@@ -55,6 +55,9 @@ public class FluidManager : MonoBehaviour
     }
     private void Update()
     {
+        if(lavaParent==null){
+            return;
+        }
         lavaTimer-=Time.deltaTime;
         if(lavaTimer<0){
             lavaTimer=timeBetwenLavaUp;

@@ -11,7 +11,7 @@ public class CoinCollector : CurrentMax
     public void CollectCoin(){
         coinsCollected+=1;
         OnChange?.Invoke();
-        if(coinsCollected>=coinsToCollect){
+        if(coinsCollected==coinsToCollect){
             OnCoinsCollected?.Invoke();
         }
     }

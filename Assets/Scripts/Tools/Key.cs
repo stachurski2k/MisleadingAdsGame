@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Key : Interactable
 {
+    [SerializeField] bool parentRelative=false;
     [SerializeField] float maxForwadDistance,maxBackwardsDistance;
     Vector3 maxForwardPoint,maxBackwardsPoint,startPos;
     public Vector3 Forward{
@@ -13,9 +14,16 @@ public class Key : Interactable
     }
     private void Start()
     {
-        startPos=transform.position;
-        maxForwardPoint=transform.position+Forward*maxForwadDistance;
-        maxBackwardsPoint=transform.position-Forward*maxBackwardsDistance;
+        if(parentRelative){
+            startPos=transform.localPosition;
+            maxForwardPoint=transform.localPosition+Forward*maxForwadDistance;
+            maxBackwardsPoint=transform.localPosition-Forward*maxBackwardsDistance;
+        }else{
+            startPos=transform.position;
+            maxForwardPoint=transform.position+Forward*maxForwadDistance;
+            maxBackwardsPoint=transform.position-Forward*maxBackwardsDistance;
+        }
+      
     }
     private void OnDrawGizmosSelected()
     {
@@ -25,17 +33,30 @@ public class Key : Interactable
     }
     public override void Move(Vector3 moveDelta){
         Vector3 axisMovement=Vector3.Project(moveDelta,Forward);
-        transform.position+=axisMovement;
+        if(parentRelative){
+            transform.localPosition+=axisMovement;
+        }else{
+            transform.position+=axisMovement;
+        }
     }
     public override void ClampMovement(){
-        Vector3 dir=(transform.position-startPos).normalized;
+        Vector3 t=(parentRelative)?transform.localPosition:transform.position;
+        Vector3 dir=(t-startPos).normalized;
         if(Mathf.Approximately(Vector3.Dot(dir,Forward),1)){
-            if(Vector3.Distance(transform.position,startPos)>maxForwadDistance){
-                transform.position=maxForwardPoint;
+            if(Vector3.Distance(t,startPos)>maxForwadDistance){
+                if(parentRelative){
+                    transform.localPosition=maxForwardPoint;
+                }else{
+                    transform.position=maxForwardPoint;
+                }
             }
         }else{
-            if(Vector3.Distance(transform.position,startPos)>maxBackwardsDistance){
-                transform.position=maxBackwardsPoint;
+            if(Vector3.Distance(t,startPos)>maxBackwardsDistance){
+                if(parentRelative){
+                    transform.localPosition=maxBackwardsPoint;
+                }else{
+                    transform.position=maxBackwardsPoint;
+                }
             }
         }
     }

@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] int winConditions=1;
     [SerializeField] GameObject winMenu;
     [SerializeField] GameObject loseMenu;
     [SerializeField] GameObject pauseMenu;
@@ -12,6 +13,7 @@ public class GameManager : MonoBehaviour
     public UnityEvent OnGameLost;
     bool inGame=true;
     bool gameFinished=false;
+    int conditions=0;
     void Update()
     {
         if(!gameFinished&&Input.GetKeyDown(KeyCode.Escape)){
@@ -33,10 +35,13 @@ public class GameManager : MonoBehaviour
         pauseMenu.gameObject.SetActive(!inGame);
     }
     public void WinGame(){
-        OnGameWon?.Invoke();
-        SetTime(false);
-        gameFinished=true;
-        SetOneActive(winMenu);
+        conditions++;
+        if(conditions>=winConditions){
+            OnGameWon?.Invoke();
+            SetTime(false);
+            gameFinished=true;
+            SetOneActive(winMenu);
+        }
     }
     public void LoseGame(){
         OnGameLost?.Invoke();

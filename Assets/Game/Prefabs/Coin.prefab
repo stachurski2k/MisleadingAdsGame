@@ -85,7 +85,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destructionMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 1536
 --- !u!1 &7172933570150765708
 GameObject:
   m_ObjectHideFlags: 0

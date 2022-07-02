@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d4d676b3daadd64faf23a4be6fc5ee2, type: 3}
   m_Name: Acid
   m_EditorClassIdentifier: 
+  damage: 5
   fluidLayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -19,3 +20,4 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   fluidMaterial: {fileID: 2100000, guid: 680828ca784577f4089bb2a1ab437e90, type: 2}
+  particlePrefab: {fileID: 0}
